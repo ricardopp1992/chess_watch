@@ -5,12 +5,14 @@ import TouchableSwitch from '../components/TouchableSwitch';
 import useInterval from '../hooks/useInterval';
 import useGameOverWatch from '../hooks/useGameOverWatch';
 
+import { WatchScreenService } from '../services/watchScreen';
+
 import { NavigationScreenFunctionComponent } from '../models/NavigationScreens';
 import { IWatchNavigationProps } from '../models/ScreensProps';
 import { Player } from '../models/interfaces';
-import Colors from '../constants/Color';
-import { WatchScreenService } from '../services/watchScreen';
+
 import ParseTime from '../utils/parseTime';
+import Colors from '../constants/Color';
 
 const WatchScreen: NavigationScreenFunctionComponent<IWatchNavigationProps> = ({ navigation }) => {
   const [timeOne, setTimeOne] = useState<number[]>(navigation.getParam('time'));
@@ -52,19 +54,21 @@ const WatchScreen: NavigationScreenFunctionComponent<IWatchNavigationProps> = ({
             isPaused={isPaused}
             watchPlayer={Player.WHITES}
             watchRunning={watchRunning}
-            releaseSwitch={setWatchRunning} />
+            releaseSwitch={setWatchRunning}
+            displayName={navigation.getParam('whitesName')} />
           <Text>{ ParseTime.parseArrayTime(timeOne) }</Text>
         </View>
         <View >
           <Text>----------------------------</Text>
         </View>
         <View style={styles.timeDisplay}>
-          <Text>{ ParseTime.parseArrayTime(timeTwo) }</Text>
+          <Text>{ParseTime.parseArrayTime(timeTwo) }</Text>
           <TouchableSwitch
             isPaused={isPaused}
             watchPlayer={Player.BLACKS}
             watchRunning={watchRunning}
-            releaseSwitch={setWatchRunning} />
+            releaseSwitch={setWatchRunning}
+            displayName={navigation.getParam('blacksName')} />
         </View>
       </View>
       <View style={styles.pauseButton}>

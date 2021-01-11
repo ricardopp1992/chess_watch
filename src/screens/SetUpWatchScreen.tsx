@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { ListRenderItem, StyleSheet, Text, View } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 import PrimaryTouchable from '../components/PrimaryTouchable';
+import NewTimeModal from '../components/NewTimeModal';
 import { ISavedTime } from '../models/interfaces';
 import { ISetUpNavigationProps } from '../models/ScreensProps';
 
@@ -10,8 +11,11 @@ import Colors from '../constants/Color';
 import ParseTime from '../utils/parseTime';
 
 const savedTimes = [{ id: 1, time: [0, 20, 0] }, { id: 2, time: [1, 0, 0] }, { id: 3, time: [0, 0, 5] }];
+const WATCH = 'Watch';
 
 const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
   const timeItem: ListRenderItem<ISavedTime> = ({ item }) => {
     return (
       <View style={styles.itemContainer}>
@@ -24,9 +28,14 @@ const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation
     );
   };
 
-  const navigateToWatchAndSetTime = (time: number[]) => navigation.navigate({ routeName: 'Watch', params: { time } });
+  const navigateToWatchAndSetTime = (time: number[]) => navigation.navigate({ routeName: WATCH, params: { time } });
 
-  const openNewTimeModal = () => console.log('Open the modal');
+  const openNewTimeModal = () => setIsVisible(true);
+
+  const closeNewTimeModal = (whitesName: string, blacksName: string, time: number[]) => {
+    setIsVisible(false);
+    navigation.navigate({ routeName: WATCH, params: { whitesName, blacksName, time } });
+  }
 
   return (
     <View style={styles.container}>
@@ -43,6 +52,7 @@ const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation
       <View style={styles.touchableContainer}>
         <PrimaryTouchable title="New Time" touchStyles={styles.newTimeButton} navigateTo={openNewTimeModal} />
       </View>
+      <NewTimeModal goNextPage={closeNewTimeModal} closeModal={() => setIsVisible(false)} isVisible={isVisible} />
     </View>
   );
 };

@@ -6,7 +6,7 @@ import Colors from '../constants/Color';
 import { Player } from '../models/interfaces';
 import { ISwitchWatchProps } from '../models/ScreensProps';
 
-const TouchableSwitch: FunctionComponent<ISwitchWatchProps> = ({ isPaused, watchRunning, watchPlayer, releaseSwitch }) => {
+const TouchableSwitch: FunctionComponent<ISwitchWatchProps> = ({ displayName, isPaused, watchRunning, watchPlayer, releaseSwitch }) => {
   const [watch, _] = useState<Player>(watchPlayer);
   const [isPressed, setIsPressed] = useState(Player.WHITES === watchPlayer);
   const enemy = Player.BLACKS === watchPlayer ? Player.WHITES : Player.BLACKS;
@@ -28,7 +28,7 @@ const TouchableSwitch: FunctionComponent<ISwitchWatchProps> = ({ isPaused, watch
   return (
     <View style={[styles.container, { backgroundColor: isPressed ? Colors.secondary : Colors.primary }]}>
       <TouchableWithoutFeedback style={styles.touchable} onPress={handlePressSwitch} >
-        <Text style={styles.switchText}>{watchPlayer}</Text>
+        <Text style={styles.switchText}>{displayName}</Text>
         <Text style={styles.switchText}>{ isPressed ? 'ON' : 'OFF' }</Text>
       </TouchableWithoutFeedback>
     </View>

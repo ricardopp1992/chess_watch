@@ -15,5 +15,6 @@ export interface ISwitchWatchProps {
   isPaused: boolean;
   watchRunning: Player;
   watchPlayer: Player;
+  displayName: string;
   releaseSwitch: Dispatch<SetStateAction<Player>>;
 }
