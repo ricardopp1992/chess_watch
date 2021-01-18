@@ -27,10 +27,6 @@ const NewTimeModal: FunctionComponent<INewTimeModal> = ({ isVisible, goNextPage,
     goNextPage(whitesName, blacksName, [hours, minutes, seconds]);
   }
 
-  const handleClose = () => {
-    console.log('CLOSED')
-  }
-
   return (
     <Modal
       visible={isVisible}

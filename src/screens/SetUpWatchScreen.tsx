@@ -9,6 +9,7 @@ import { ISetUpNavigationProps } from '../models/ScreensProps';
 
 import Colors from '../constants/Color';
 import ParseTime from '../utils/parseTime';
+import Layout from '../components/Layout';
 
 const savedTimes = [{ id: 1, time: [0, 20, 0] }, { id: 2, time: [1, 0, 0] }, { id: 3, time: [0, 0, 5] }];
 const WATCH = 'Watch';
@@ -38,22 +39,24 @@ const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.selectTimeText}>
-        <Text style={styles.selectTimeText}>SELECT TIME</Text>
+    <Layout>
+      <View style={styles.container}>
+        <View style={styles.selectTimeText}>
+          <Text style={styles.selectTimeText}>SELECT TIME</Text>
+        </View>
+        <View style={styles.timeList}>
+          <FlatList
+            style={{ width: '100%', alignSelf: 'center' }}
+            keyExtractor={(item) => `${item.id}`}
+            data={savedTimes}
+            renderItem={timeItem} />
+        </View>
+        <View style={styles.touchableContainer}>
+          <PrimaryTouchable title="New Time" touchStyles={styles.newTimeButton} navigateTo={openNewTimeModal} />
+        </View>
+        <NewTimeModal goNextPage={closeNewTimeModal} closeModal={() => setIsVisible(false)} isVisible={isVisible} />
       </View>
-      <View style={styles.timeList}>
-        <FlatList
-          style={{ width: '100%', alignSelf: 'center' }}
-          keyExtractor={(item) => `${item.id}`}
-          data={savedTimes}
-          renderItem={timeItem} />
-      </View>
-      <View style={styles.touchableContainer}>
-        <PrimaryTouchable title="New Time" touchStyles={styles.newTimeButton} navigateTo={openNewTimeModal} />
-      </View>
-      <NewTimeModal goNextPage={closeNewTimeModal} closeModal={() => setIsVisible(false)} isVisible={isVisible} />
-    </View>
+    </Layout>
   );
 };
 

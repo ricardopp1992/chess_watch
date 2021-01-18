@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import HistoryItem from '../components/HistoryItem';
+import Layout from '../components/Layout';
 
 import { dummyData } from '../../data/dummyData';
 import { NavigationScreenFunctionComponent } from '../models/NavigationScreens';
@@ -10,14 +11,16 @@ import { NavigationScreenFunctionComponent } from '../models/NavigationScreens';
 const HistoryScreen: NavigationScreenFunctionComponent = () => {
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.listContainer}
-        keyExtractor={(item, i) => item.title}
-        numColumns={2}
-        data={dummyData}
-        renderItem={HistoryItem} />
-    </View>
+    <Layout>
+      <View style={styles.container}>
+        <FlatList
+          style={styles.listContainer}
+          keyExtractor={(item, i) => item.title}
+          numColumns={2}
+          data={dummyData}
+          renderItem={HistoryItem} />
+      </View>
+    </Layout>
   );
 }
 
