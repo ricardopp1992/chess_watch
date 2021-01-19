@@ -11,5 +11,10 @@ export enum Player {
 export interface IStoreChess {
   blacksName: string;
   whitesName: string;
-  lastTimes: number[][]
+  lastTimes: ITimesStore[]
+}
+
+export interface ITimesStore {
+  id: number,
+  time: number[]
 }

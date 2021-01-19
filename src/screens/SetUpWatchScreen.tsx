@@ -1,21 +1,23 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { ListRenderItem, StyleSheet, Text, View } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector, useStore } from 'react-redux';
 
 import PrimaryTouchable from '../components/PrimaryTouchable';
 import NewTimeModal from '../components/NewTimeModal';
-import { ISavedTime } from '../models/interfaces';
+import { ISavedTime, IStoreChess } from '../models/interfaces';
 import { ISetUpNavigationProps } from '../models/ScreensProps';
 
 import Colors from '../constants/Color';
 import ParseTime from '../utils/parseTime';
 import Layout from '../components/Layout';
 
-const savedTimes = [{ id: 1, time: [0, 20, 0] }, { id: 2, time: [1, 0, 0] }, { id: 3, time: [0, 0, 5] }];
+// const savedTimes = [{ id: 1, time: [0, 20, 0] }, { id: 2, time: [1, 0, 0] }, { id: 3, time: [0, 0, 5] }];
 const WATCH = 'Watch';
 
 const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const lastTimesStore: any = useSelector<{chess: IStoreChess}>((store) => store.chess.lastTimes);
 
   const timeItem: ListRenderItem<ISavedTime> = ({ item }) => {
     return (
@@ -48,7 +50,7 @@ const SetUpWatchScreen: FunctionComponent<ISetUpNavigationProps> = ({ navigation
           <FlatList
             style={{ width: '100%', alignSelf: 'center' }}
             keyExtractor={(item) => `${item.id}`}
-            data={savedTimes}
+            data={lastTimesStore}
             renderItem={timeItem} />
         </View>
         <View style={styles.touchableContainer}>
