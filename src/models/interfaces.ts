@@ -1,7 +1,4 @@
-export interface ISavedTime {
-  id: number;
-  time: number[];
-}
+import { actionsEnum } from "./enums";
 
 export enum Player {
   BLACKS = 'blacks',
@@ -11,10 +8,21 @@ export enum Player {
 export interface IStoreChess {
   blacksName: string;
   whitesName: string;
-  lastTimes: ITimesStore[]
+  lastTimes: ISavedTime[]
 }
 
-export interface ITimesStore {
-  id: number,
-  time: number[]
+export interface ISavedTime {
+  id: string;
+  time: number[];
+}
+
+export interface IActionChessReducer {
+  type: actionsEnum;
+  payload: string | {id: string, time: number[]}
+}
+
+export interface INewTimeModal {
+  isVisible: boolean;
+  goNextPage: Function;
+  closeModal: Function;
 }

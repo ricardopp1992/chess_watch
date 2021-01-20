@@ -1,15 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Modal, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Player } from '../models/interfaces';
+import { Player, INewTimeModal } from '../models/interfaces';
 import Colors from '../constants/Color';
-
-export interface INewTimeModal {
-  isVisible: boolean;
-  goNextPage: Function;
-  closeModal: Function;
-}
+import { actionsEnum } from '../models/enums';
 
 const NewTimeModal: FunctionComponent<INewTimeModal> = ({ isVisible, goNextPage, closeModal }) => {
   const [hours, setHours] = useState('00');
@@ -17,6 +13,8 @@ const NewTimeModal: FunctionComponent<INewTimeModal> = ({ isVisible, goNextPage,
   const [seconds, setSeconds] = useState('00');
   const [whitesName, setWhitesName] = useState('');
   const [blacksName, setBlacksName] = useState('');
+  const dispatch = useDispatch();
+  const { SET_LAST_TIME } = actionsEnum;
 
   const handleWhiteName = (name: string, player: Player) => {
     if (player === Player.WHITES) setWhitesName(name);
@@ -24,6 +22,8 @@ const NewTimeModal: FunctionComponent<INewTimeModal> = ({ isVisible, goNextPage,
   }
 
   const handleCloseModal = () => {
+    const time = [Number(hours), Number(minutes), Number(seconds)]
+    dispatch({ type: SET_LAST_TIME, payload: { id: '1', time } });
     goNextPage(whitesName, blacksName, [hours, minutes, seconds]);
   }
 
@@ -31,7 +31,6 @@ const NewTimeModal: FunctionComponent<INewTimeModal> = ({ isVisible, goNextPage,
     <Modal
       visible={isVisible}
       transparent
-      
       animationType="slide"
       onRequestClose={() => { console.log('closed') }}>
       <View style={styles.container} >
